@@ -10,10 +10,8 @@ ENV DAEMON_VERSION=${VERSION} \
 WORKDIR /srv/daemon
 
 RUN \
- apk --update --no-cache add coreutils curl openssl make gcc g++ python gnupg tar \
- && curl -Lo daemon.tar.gz https://github.com/Pterodactyl/Daemon/archive/${DAEMON_VERSION}.tar.gz \
- && tar --strip-components=1 -xzvf daemon.tar.gz \
- && rm -f daemon.tar.gz \
+ apk --update --no-cache add coreutils curl openssl make gcc g++ python gnupg tar git \
+ && git clone https://github.com/Mystical-Machines/daemon.git\
  && npm install --production \
  && addgroup -S -g ${UID} pterodactyl && adduser -S -D -H -G pterodactyl -u ${UID} -s /bin/false pterodactyl \
  && apk del curl make gcc g++ python gnupg \
